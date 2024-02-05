@@ -8,20 +8,23 @@ import {
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
+import { useDispatch, useSelector } from "react-redux";
+import { ItemHandler } from "../../Store/Slices/ItemSlice";
 
 const AddItemScreen = () => {
-  const tempArry = ["Ayan", "Fiaz"];
+  const { Items } = useSelector((state) => state.ItemSlice);
+  const dispatch = useDispatch("");
 
-  const [value, setValue] = useState(false)
+  // dispatch(ItemHandler("AAA"))
+
+  console.log(Items);
+  const tempArry = Items;
+
+  const [value, setValue] = useState(false);
 
   console.log(value);
 
-  useEffect(()=>{
-
-
-
-
-  }, [value])
+  useEffect(() => {}, [value]);
 
   const ActiveCateStyle = {
     backgroundColor: "red",
@@ -82,28 +85,43 @@ const AddItemScreen = () => {
           </View>
         </View>
         <View style={{ flex: 12, backgroundColor: "yellow" }}>
-          <View style={{ flex: 1.5, padding: 4, gap: 10 }}>
+          <View style={{ flex: 2, padding: 4, gap: 10 }}>
             <Text style={{ textAlign: "center", fontWeight: "bold" }}>
               Select Item Category
             </Text>
-            <ScrollView horizontal contentContainerStyle={{ width: "100%" }}>
-
-              {value ? tempArry.map((e)=>{
-                if(value == e){
-                  return(
-                    <Text style={ActiveCateStyle} onPress={()=>setValue(e)}>{e}</Text>
-                  )
-                }else{
-                  return(
-                    <Text style={NonActiveStyle} onPress={()=>setValue(e)}>{e}</Text>
-                  )
-                }
-                
-              }) : tempArry.map((e)=>{
-                return(
-                  <Text style={NonActiveStyle} onPress={()=>setValue(e)}>{e}</Text>
-                )
-              })}
+            <ScrollView horizontal contentContainerStyle={{alignItems:"center"}}>
+              {value
+                ? tempArry.map((e) => {
+                    if (value == e.name) {
+                      return (
+                        <Text
+                          style={ActiveCateStyle}
+                          onPress={() => setValue(e.name)}
+                        >
+                          {e.name}
+                        </Text>
+                      );
+                    } else {
+                      return (
+                        <Text
+                          style={NonActiveStyle}
+                          onPress={() => setValue(e.name)}
+                        >
+                          {e.name}
+                        </Text>
+                      );
+                    }
+                  })
+                : tempArry.map((e) => {
+                    return (
+                      <Text
+                        style={NonActiveStyle}
+                        onPress={() => setValue(e.name)}
+                      >
+                        {e.name}
+                      </Text>
+                    );
+                  })}
               {/* <Text
                 style={NonActiveStyle}
               >
@@ -124,8 +142,10 @@ const AddItemScreen = () => {
              */}
             </ScrollView>
           </View>
-          <View style={{ flex: 10 }}>
-            <View style={{ flex: 1, padding: 5, gap: 10 }}>
+          <View style={{ flex: 3, justifyContent: "center" }}>
+            <View
+              style={{ flex: 1, padding: 5, gap: 10, justifyContent: "center" }}
+            >
               <TextInput
                 style={{
                   borderColor: "red",
@@ -134,7 +154,9 @@ const AddItemScreen = () => {
                   fontSize: 14,
                   borderRadius: 10,
                 }}
-                placeholder={`Enter ${value?value:""} Item Name`}
+                placeholder={`Enter ${
+                  value ? value + " Item" : "Category"
+                } Name`}
               />
               <TouchableOpacity
                 style={{
@@ -154,6 +176,47 @@ const AddItemScreen = () => {
                   ADD
                 </Text>
               </TouchableOpacity>
+            </View>
+          </View>
+          <View style={{ flex: 10, backgroundColor: "blue" }}>
+            <View style={{ flex: 1 }}>
+              <ScrollView contentContainerStyle={{ width: "100%", padding: 8 }}>
+                {value
+                  ? tempArry.map((e) => {
+                      if (value == e.name) {
+                      return  e.items.map((i) => {
+                          console.log(i, "ayaaa");
+                          return (
+                            <View
+                              style={{
+                                backgroundColor: "red",
+                                flexDirection: "row",
+                                marginTop: 10,
+                                height: 70,
+                                width: "100%",
+                                textAlign: "center",
+                                paddingVertical: 9,
+                                borderRadius: 10,
+                                justifyContent: "space-between",
+                                paddingHorizontal: 10,
+                                alignItems: "center",
+                              }}
+                            >
+                              <View>
+                                <Text>{i.name}</Text>
+                              </View>
+                              <View>
+                                <Text>+</Text>
+                                <Text>0</Text>
+                                <Text>--</Text>
+                              </View>
+                            </View>
+                          );
+                        });
+                      }
+                    })
+                  : ""}
+              </ScrollView>
             </View>
           </View>
         </View>
