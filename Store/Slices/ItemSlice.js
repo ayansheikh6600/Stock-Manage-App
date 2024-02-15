@@ -6,15 +6,47 @@ const initialState = {
       name: "Lays",
       items: [
         {
-          name: "Item 1",
+          name: "Chees 20",
           Qauntity: 1,
         },
         {
-          name: "Item 2",
+          name: "Salt 20",
           Qauntity: 1,
         },
         {
-          name: "Item 3",
+          name: "Paprika 20",
+          Qauntity: 1,
+        },
+        {
+          name: "Masala 20",
+          Qauntity: 1,
+        },
+        {
+          name: "Chees 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Salt 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Paprika 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Masala 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Yougard 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Wavy BBQ 30",
+          Qauntity: 1,
+        },
+        {
+          name: "Wavy Black 30",
           Qauntity: 1,
         },
       ],
@@ -86,7 +118,30 @@ const ItemSlice = createSlice({
   initialState,
   reducers: {
     ItemHandler: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
+      // console.log(state.Items);
+      const CategoryName = action.payload[0];
+      const CategoryItemName = action.payload[1];
+      const currentState = state.Items;
+
+      // console.log(CategoryItemName, CategoryName);
+
+      if (!CategoryItemName) {
+        return;
+      }
+
+      if (!CategoryName) {
+        const obj = {
+          name: CategoryItemName,
+          items: [],
+        };
+
+        currentState.push(obj);
+      }
+
+      currentState.map((e) => {
+        console.log(e);
+      });
     },
   },
 });

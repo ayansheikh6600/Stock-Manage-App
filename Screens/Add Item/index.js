@@ -10,24 +10,34 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { ItemHandler } from "../../Store/Slices/ItemSlice";
+import Lays from '../../assets/Companies Logo/lays.png'
+import Winner from '../../assets/Companies Logo/winner.jpg'
+import SuperCrips from '../../assets/Companies Logo/super-crisp.png'
+import Kolsan from '../../assets/Companies Logo/kolsan.png'
+import AppConfig from "../../Utils";
+
+
+
 
 const AddItemScreen = () => {
   const { Items } = useSelector((state) => state.ItemSlice);
   const dispatch = useDispatch("");
+  const [itemInputValue, SetItemInputValue] = useState("")
+  const logos = [Lays, Winner, SuperCrips, Kolsan]
 
   // dispatch(ItemHandler("AAA"))
 
-  console.log(Items);
+  // console.log(Items);
   const tempArry = Items;
 
   const [value, setValue] = useState(false);
 
-  console.log(value);
+  // console.log(value);
 
   useEffect(() => {}, [value]);
 
   const ActiveCateStyle = {
-    backgroundColor: "red",
+    backgroundColor: AppConfig.HeaderColor,
     marginRight: 10,
     height: 40,
     width: 120,
@@ -40,10 +50,10 @@ const AddItemScreen = () => {
 
   const NonActiveStyle = {
     borderWidth: 2,
-    borderColor: "red",
+    borderColor: AppConfig.HeaderColor,
     marginRight: 10,
     fontWeight: "600",
-    color: "red",
+    color: AppConfig.HeaderColor,
     height: 40,
     width: 120,
     textAlign: "center",
@@ -53,20 +63,20 @@ const AddItemScreen = () => {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "red" }}>
+      <View style={{ flex: 1, }}>
         <View
-          style={{ flex: 1, backgroundColor: "blue", flexDirection: "row" }}
+          style={{ flex: 1,backgroundColor:AppConfig.HeaderColor, flexDirection: "row" }}
         >
           <View style={{ flex: 1, justifyContent: "center", paddingLeft: 10 }}>
             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-              <Text style={{ fontSize: 32 }}>{"<"}</Text>
+              <Text style={{ fontSize: 32, fontWeight:"bold", fontStyle:"italic", color:"white" }}>{"<"}</Text>
             </TouchableOpacity>
           </View>
           <View style={{ flex: 1, justifyContent: "center", paddingLeft: 10 }}>
             <Text
-              style={{ fontSize: 19, fontWeight: "700", fontStyle: "italic" }}
+              style={{ fontSize: 19, fontWeight: "700", fontStyle: "italic" , color:"white"}}
             >
-              Osama's Shop
+              {AppConfig.AppName}
             </Text>
           </View>
           <View
@@ -84,7 +94,7 @@ const AddItemScreen = () => {
             </TouchableOpacity> */}
           </View>
         </View>
-        <View style={{ flex: 12, backgroundColor: "yellow" }}>
+        <View style={{ flex: 12, backgroundColor: "white" }}>
           <View style={{ flex: 2, padding: 4, gap: 10 }}>
             <Text style={{ textAlign: "center", fontWeight: "bold" }}>
               Select Item Category
@@ -94,12 +104,14 @@ const AddItemScreen = () => {
                 ? tempArry.map((e) => {
                     if (value == e.name) {
                       return (
+                        <>
                         <Text
                           style={ActiveCateStyle}
                           onPress={() => setValue(e.name)}
                         >
                           {e.name}
                         </Text>
+                        </>
                       );
                     } else {
                       return (
@@ -148,7 +160,7 @@ const AddItemScreen = () => {
             >
               <TextInput
                 style={{
-                  borderColor: "red",
+                  borderColor: AppConfig.HeaderColor,
                   borderWidth: 2,
                   padding: 6,
                   fontSize: 14,
@@ -157,13 +169,16 @@ const AddItemScreen = () => {
                 placeholder={`Enter ${
                   value ? value + " Item" : "Category"
                 } Name`}
+                onChangeText={(e)=>SetItemInputValue(e)}
+                value={itemInputValue}
               />
               <TouchableOpacity
                 style={{
-                  backgroundColor: "red",
+                  backgroundColor: AppConfig.HeaderColor,
                   padding: 10,
                   borderRadius: 12,
                 }}
+                onPress={()=>dispatch(ItemHandler([value, itemInputValue]))}
               >
                 <Text
                   style={{
@@ -178,14 +193,14 @@ const AddItemScreen = () => {
               </TouchableOpacity>
             </View>
           </View>
-          <View style={{ flex: 10, backgroundColor: "blue" }}>
+          <View style={{ flex: 10, }}>
             <View style={{ flex: 1 }}>
               <ScrollView contentContainerStyle={{ width: "100%", padding: 8 }}>
                 {value
                   ? tempArry.map((e) => {
                       if (value == e.name) {
                       return  e.items.map((i) => {
-                          console.log(i, "ayaaa");
+                          // console.log(i, "ayaaa");
                           return (
                             <View
                               style={{
