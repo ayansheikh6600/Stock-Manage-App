@@ -101,7 +101,7 @@ const Home = () => {
                 : Items.map((section) => ({
                   title: section.name,
                   data: section.items,
-                  
+
                 }))
             }
             keyExtractor={(item, index) => item.name + index}
@@ -110,7 +110,7 @@ const Home = () => {
                 <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 10 }}>{title}</Text>
               )
             }
-            renderItem={({ item , section}) => (
+            renderItem={({ item, section }) => (
               <View
                 style={{
                   backgroundColor: AppConfig.HeaderColor,
