@@ -50,6 +50,8 @@ const Home = () => {
     borderRadius: 120,
   };
 
+  
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <StatusBar backgroundColor={AppConfig.HeaderColor} />
